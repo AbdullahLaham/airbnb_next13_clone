@@ -4,6 +4,7 @@ import Avatar from '../Avatar'
 import {useState, useCallback} from 'react'
 import MenuItem from './MenuItem'
 import { useRouter } from 'next/navigation'
+import useRegisterModal from '@/app/hooks/useRegisterModal'
 
 interface menuItemProps {
     onClick: () => void,
@@ -11,7 +12,7 @@ interface menuItemProps {
 }
 const UserMenu = () => {
   const [isOpen, setIsOpen] = useState(false);  
-
+  const registerModal = useRegisterModal();
   const toggleOpen = useCallback(() => {
         setIsOpen((value) => !value)
     },[]
@@ -111,6 +112,18 @@ const UserMenu = () => {
             //     />
             //   </>
             // )} */}
+            <div>
+            <>
+               <MenuItem 
+                 label="Login" 
+                 onClick={'loginModal.onOpen'}
+               />
+               <MenuItem 
+                 label="Sign up" 
+                 onClick={registerModal.onOpen}
+               />
+             </>
+            </div>
           </div>
         </div>
       )}
