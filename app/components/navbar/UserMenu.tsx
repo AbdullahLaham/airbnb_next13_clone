@@ -1,15 +1,18 @@
 'use client'
 import {AiOutlineMenu} from 'react-icons/ai'
 import Avatar from '../Avatar'
-import {useState, useCallback} from 'react'
+import {useState, useCallback, useEffect} from 'react'
 import MenuItem from './MenuItem'
 import { useRouter } from 'next/navigation'
 import useRegisterModal from '@/app/hooks/useRegisterModal'
+import RegisterModal from '../modals/RegisterModal'
 
 interface menuItemProps {
     onClick: () => void,
     label: string,
 }
+
+
 const UserMenu = () => {
   const [isOpen, setIsOpen] = useState(false);  
   const registerModal = useRegisterModal();
@@ -17,6 +20,10 @@ const UserMenu = () => {
         setIsOpen((value) => !value)
     },[]
   )
+  useEffect(() => {
+    console?.log(registerModal?.isOpen);
+  }, [registerModal?.isOpen]);
+
   const router = useRouter();
   return (
     <div className='relative'>
@@ -114,10 +121,10 @@ const UserMenu = () => {
             // )} */}
             <div>
             <>
-               <MenuItem 
+               {/* <MenuItem 
                  label="Login" 
                  onClick={'loginModal.onOpen'}
-               />
+               /> */}
                <MenuItem 
                  label="Sign up" 
                  onClick={registerModal.onOpen}

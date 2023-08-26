@@ -5,6 +5,8 @@ import Navbar from './components/navbar/Navbar'
 import ClientOnly from './components/ClientOnly'
 import Modal from './components/modals/Modal'
 import RegisterModal from './components/modals/RegisterModal'
+// import {ToasterProvider} from './providers/ToasterProvider'
+import { Toaster } from 'react-hot-toast'
 const font = Nunito({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
@@ -21,6 +23,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={font.className}>
         <ClientOnly>
+          <Toaster />
           <RegisterModal />
           <Navbar />
           {/* <Modal isOpen={true} title={'Hellw World'} actionLabel={'Submit'} /> */}

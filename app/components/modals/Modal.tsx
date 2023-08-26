@@ -31,19 +31,19 @@ const Modal: React.FC<ModalProps> = ({
 
     useEffect(() => {
         setShowModal(isOpen)
+        console.log(isOpen, 'tttt')
     }, [isOpen]);
 
     const handleClose = useCallback(() => {
-         if (disabled) {
-          return
-         }   
-         setShowModal(false);
-         setTimeout(() => {
-          onClose();
-         }, 300);
-
-    },[disabled, onClose]);
-
+      if (disabled) {
+        return;
+      }
+    
+      setShowModal(false);
+      setTimeout(() => {
+        onClose();
+      }, 300)
+    }, [onClose, disabled]);
 
     const handleSubmit = useCallback(() => {
       if (disabled) {
@@ -63,9 +63,12 @@ const Modal: React.FC<ModalProps> = ({
 
 
 },[disabled, secondaryAction]);
+
+
 if (!isOpen) {
   return null;
 }
+
   return (
     <div className='flex items-center justify-center overflow-x-hidden overflow-y-hidden fixed inset-0 z-50 outline-none bg-neutral-800/70 '>
       <div className='relative w-full md:w-4/6 lg:3/6 xl:w-2/5 my-6 mx-auto h-full lg:h-auto md:h-auto'>
@@ -101,12 +104,19 @@ if (!isOpen) {
                 </div>
               </div>
               {/* Body */}
+              <div className="relative p-6 flex-auto">
+                {body}
+              </div>
+              
+              {/*footer*/}
+
               <div className='flex flex-col gap-2 p-6'>
                 <div className='flex flex-row items-center gap-4 w-full '>
                   {secondaryAction && secondaryActionLabel && <Button outline disabled={disabled} onClick={handleSecondaryAction} label={secondaryActionLabel} />}
                   <Button disabled={disabled} onClick={handleSubmit} label={actionLabel}  />
 
                 </div>
+                {footer}
 
               </div>
 
