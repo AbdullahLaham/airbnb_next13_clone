@@ -1,11 +1,12 @@
 import create from 'zustand';
 import axios from 'axios';
 import { User } from 'next-auth';
+import { safeUser } from '../types';
 
 
 
 interface AuthState {
-  user: User | null;
+  user: safeUser | null;
   login: (email: string, password: string) => Promise<void>;
   register: (email: string, name: string, password: string) => Promise<void>;
   logout: () => void;
