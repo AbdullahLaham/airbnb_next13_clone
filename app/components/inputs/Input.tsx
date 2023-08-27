@@ -1,6 +1,6 @@
 'use client'
 
-import React from 'react'
+import React, { useEffect } from 'react'
 import { FieldError, FieldErrors, FieldValues, UseFormRegister } from 'react-hook-form'
 import { BiDollar } from 'react-icons/bi'
 interface InputProps {
@@ -23,6 +23,10 @@ const Input: React.FC<InputProps> = ({
     required,
     errors,
   }) => {
+
+    useEffect(() => {
+        console.log({...register(id, {required})}, 'ggggg')
+    }, [register])
   return (
     <div className='w-full relative'>
         {formatPrice && (

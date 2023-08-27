@@ -3,17 +3,17 @@ import { IconType } from 'react-icons'
 interface ButtonProps {
     label: string,
     onClick: (e: React.MouseEvent<HTMLButtonElement>) => void,
-    disabled: boolean,
+    disabled?: boolean,
     outline: boolean,
-    small: boolean,
+    small?: boolean,
     icon: IconType
 }
 const Button: React.FC<ButtonProps> = ({
     label, 
     onClick, 
-    disabled, 
+    disabled=false, 
     outline,
-    small,
+    small=false,
     icon: Icon,
 }) => {
   return (<button

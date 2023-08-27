@@ -6,6 +6,8 @@ import MenuItem from './MenuItem'
 import { useRouter } from 'next/navigation'
 import useRegisterModal from '@/app/hooks/useRegisterModal'
 import RegisterModal from '../modals/RegisterModal'
+import useLoginModal from '@/app/hooks/useLoginModal'
+import useAuthStore from '@/app/hooks/useAuthStore'
 
 interface menuItemProps {
     onClick: () => void,
@@ -16,6 +18,7 @@ interface menuItemProps {
 const UserMenu = () => {
   const [isOpen, setIsOpen] = useState(false);  
   const registerModal = useRegisterModal();
+  const loginModal = useLoginModal();
   const toggleOpen = useCallback(() => {
         setIsOpen((value) => !value)
     },[]
@@ -25,6 +28,10 @@ const UserMenu = () => {
   }, [registerModal?.isOpen]);
 
   const router = useRouter();
+
+  // current user
+  const {user: currentUser, logout} = useAuthStore();
+  
   return (
     <div className='relative'>
         <div className='flex flex-row items-center gap-3 '>
@@ -79,7 +86,7 @@ const UserMenu = () => {
         >
             
           <div className="flex flex-col cursor-pointer">
-            {/* {currentUser ? ( */}
+            {currentUser ? (
               <>
                 <MenuItem 
                   label="My trips" 
@@ -97,40 +104,40 @@ const UserMenu = () => {
                   label="My properties" 
                   onClick={() => router.push('/properties')}
                 />
-                {/* <MenuItem 
+                <MenuItem 
                   label="Airbnb your home" 
-                  onClick={rentModal.onOpen}
+                  // onClick={rentModal.onOpen}
                 />
                 <hr />
                 <MenuItem 
                   label="Logout" 
-                  onClick={() => signOut()}
-                /> */}
+                  onClick={() => logout()}
+                />
               </>
-            {/* // ) : (
-            //   <>
-            //     <MenuItem 
-            //       label="Login" 
-            //       onClick={loginModal.onOpen}
-            //     />
-            //     <MenuItem 
-            //       label="Sign up" 
-            //       onClick={registerModal.onOpen}
-            //     />
-            //   </>
-            // )} */}
-            <div>
-            <>
-               {/* <MenuItem 
-                 label="Login" 
-                 onClick={'loginModal.onOpen'}
-               /> */}
-               <MenuItem 
-                 label="Sign up" 
-                 onClick={registerModal.onOpen}
-               />
-             </>
-            </div>
+            ) : (
+              <>
+                <MenuItem 
+                  label="Login" 
+                  onClick={loginModal.onOpen}
+                />
+                <MenuItem 
+                  label="Sign up" 
+                  onClick={registerModal.onOpen}
+                />
+              </>
+            )}
+            {/* // <div>
+            // <>
+            //    <MenuItem 
+            //      label="Login" 
+            //      onClick={loginModal.onOpen}
+            //    />
+            //    <MenuItem 
+            //      label="Sign up" 
+            //      onClick={registerModal.onOpen}
+            //    />
+            //  </>
+            // </div> */}
           </div>
         </div>
       )}

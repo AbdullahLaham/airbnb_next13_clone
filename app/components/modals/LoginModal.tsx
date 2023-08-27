@@ -17,18 +17,24 @@ import {
 } from "react-hook-form";
 
 // import useLoginModal from "@/app/hooks/useLoginModal";
-import useRegisterModal from "@/app/hooks/useRegisterModal";
+import useLoginModal from "@/app/hooks/useLoginModal";
 
 import Modal from "./Modal";
 import Input from "../inputs/Input";
 // import Heading from "../Heading";
 import Button from "../Button";
 import Heading from '../Heading';
+import { useRouter } from 'next/navigation';
+import useAuthStore from '@/app/hooks/useAuthStore';
 // import { Input } from 'postcss';
 
-const RegisterModal = () => {
-    const registerModal = useRegisterModal();
+const LoginModal = () => {
+    const loginModal = useLoginModal();
+    const authStore = useAuthStore();
+    console.log(authStore?.user)
     const [isLoading, setIsLoading] = useState(false);
+    // router
+    const router = useRouter();
     const {
         register,
         handleSubmit,
@@ -38,24 +44,16 @@ const RegisterModal = () => {
 
     } = useForm<FieldValues>({
         defaultValues: {
-            name: '',
             email: '',
             password: '',
         }
     });
-    console.log(registerModal.isOpen, 'yyyyyyyy')
+    console.log(loginModal.isOpen, 'yyyyyyyy')
     const bodyContent = (
         <div className='flex flex-col gap-4 '>
-            <Heading title={'Welcome to Airbnb'} subtitle='Create an Account!' />
+            <Heading title={'Welcome back'} subtitle='Login to your account' />
             <Input id='email' disabled={isLoading} label='Email' register={register} errors={errors} required  />
-            <Input
-                id="name"
-                label="Name"
-                disabled={isLoading}
-                register={register}
-                errors={errors}
-                required
-            />
+            
             <Input
                 id="password"
                 label="Password"
@@ -95,42 +93,45 @@ const RegisterModal = () => {
       >
         <p>Already have an account?
           <span 
-            onClick={registerModal?.onClose} 
+            onClick={loginModal?.onClose} 
             className="
               text-neutral-800
                 cursor-pointer 
                 hover:underline
                 hover:font-semibold
             "
-            > Log in</span>
+            > Register</span>
         </p>
       </div>
     </div>
   )
 
-    let onSubmit: SubmitHandler<FieldValues> = (data) => {
+    let onSubmit: SubmitHandler<FieldValues> = async (data) => {
         setIsLoading(true);
-
-        axios.post('/api/register', data)
+        const {email, password} = data
+        
+        authStore.login(email, password)
         .then(() => {
-            toast.success('Registered!');
-            registerModal.onClose();
+            toast.success('Logged In!');
+            router.refresh();
+            loginModal.onClose();
             // loginModal.onOpen();
         })
         .catch((error) => {
-        toast.error(error);
+        toast.error(error?.message);
         })
         .finally(() => {
         setIsLoading(false);
         })
+
     }
   return (
     <Modal
       disabled={isLoading}
-      isOpen={registerModal.isOpen}
-      title="Register"
+      isOpen={loginModal.isOpen}
+      title="Login"
       actionLabel="Continue"
-      onClose={registerModal.onClose}
+      onClose={loginModal.onClose}
       onSubmit={handleSubmit(onSubmit)}
       body={bodyContent}
       footer={footerContent}
@@ -138,4 +139,7 @@ const RegisterModal = () => {
   )
 }
 
-export default RegisterModal
+export default LoginModal
+
+
+
