@@ -9,6 +9,7 @@ import RegisterModal from './components/modals/RegisterModal'
 // import {ToasterProvider} from './providers/ToasterProvider'
 import { Toaster } from 'react-hot-toast'
 import LoginModal from './components/modals/LoginModal'
+import RentModal from './components/modals/RentModal'
 
 const font = Nunito({ subsets: ['latin'] })
 
@@ -29,6 +30,7 @@ export default function RootLayout({
           <Toaster />
           <RegisterModal />
           <LoginModal />
+          <RentModal />
           <Navbar />
           {/* <Modal isOpen={true} title={'Hellw World'} actionLabel={'Submit'} /> */}
         </ClientOnly>

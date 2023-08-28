@@ -8,6 +8,7 @@ import useRegisterModal from '@/app/hooks/useRegisterModal'
 import RegisterModal from '../modals/RegisterModal'
 import useLoginModal from '@/app/hooks/useLoginModal'
 import useAuthStore from '@/app/hooks/useAuthStore'
+import useRentModal from '@/app/hooks/useRentModal'
 
 interface menuItemProps {
     onClick: () => void,
@@ -19,10 +20,22 @@ const UserMenu = () => {
   const [isOpen, setIsOpen] = useState(false);  
   const registerModal = useRegisterModal();
   const loginModal = useLoginModal();
+  const rentModal = useRentModal();
+
+  const {user: currentUser, logout} = useAuthStore();
+
   const toggleOpen = useCallback(() => {
         setIsOpen((value) => !value)
     },[]
   )
+  const onRent = useCallback(() => {
+    if (!currentUser?.email) {
+      return loginModal.onOpen();
+    }
+
+    return rentModal.onOpen();
+    
+  }, [currentUser, loginModal, rentModal]);
   useEffect(() => {
     console?.log(registerModal?.isOpen);
   }, [registerModal?.isOpen]);
@@ -30,12 +43,12 @@ const UserMenu = () => {
   const router = useRouter();
 
   // current user
-  const {user: currentUser, logout} = useAuthStore();
+  
   
   return (
     <div className='relative'>
         <div className='flex flex-row items-center gap-3 '>
-            <div onClick={() => {console.log('h')}} className='hidden md:block text-sm font-semibold py-3 px-4 rounded-full hover:bg-neutral-100 transition cursor-pointer'>
+            <div onClick={onRent} className='hidden md:block text-sm font-semibold py-3 px-4 rounded-full hover:bg-neutral-100 transition cursor-pointer'>
                 Airbnb your home
 
             </div>
@@ -106,7 +119,7 @@ const UserMenu = () => {
                 />
                 <MenuItem 
                   label="Airbnb your home" 
-                  // onClick={rentModal.onOpen}
+                  onClick={rentModal.onOpen}
                 />
                 <hr />
                 <MenuItem 

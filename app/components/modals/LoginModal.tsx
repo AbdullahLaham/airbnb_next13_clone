@@ -26,11 +26,13 @@ import Button from "../Button";
 import Heading from '../Heading';
 import { useRouter } from 'next/navigation';
 import useAuthStore from '@/app/hooks/useAuthStore';
+import useRegisterModal from '@/app/hooks/useRegisterModal';
 // import { Input } from 'postcss';
 
 const LoginModal = () => {
     const loginModal = useLoginModal();
     const authStore = useAuthStore();
+    const registerModal = useRegisterModal();
     console.log(authStore?.user)
     const [isLoading, setIsLoading] = useState(false);
     // router
@@ -48,7 +50,15 @@ const LoginModal = () => {
             password: '',
         }
     });
-    console.log(loginModal.isOpen, 'yyyyyyyy')
+    console.log(loginModal.isOpen, 'yyyyyyyy');
+
+
+
+    const toggle = useCallback(() => {
+        loginModal.onClose();
+        registerModal.onOpen();
+      },[loginModal, registerModal])
+
     const bodyContent = (
         <div className='flex flex-col gap-4 '>
             <Heading title={'Welcome back'} subtitle='Login to your account' />
@@ -91,9 +101,9 @@ const LoginModal = () => {
           font-light
         "
       >
-        <p>Already have an account?
+        <p>First Time using Airbnb?
           <span 
-            onClick={loginModal?.onClose} 
+            onClick={toggle} 
             className="
               text-neutral-800
                 cursor-pointer 

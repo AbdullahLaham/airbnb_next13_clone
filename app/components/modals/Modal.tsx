@@ -12,8 +12,8 @@ interface ModalProps {
     footer: React.ReactElement,
     actionLabel: string,
     disabled: boolean,
-    secondaryAction: () => void,
-    secondaryActionLabel: string,
+    secondaryAction?: () => void,
+    secondaryActionLabel?: string,
 }
 const Modal: React.FC<ModalProps> = ({ 
     isOpen, 

@@ -24,10 +24,12 @@ import Input from "../inputs/Input";
 // import Heading from "../Heading";
 import Button from "../Button";
 import Heading from '../Heading';
+import useLoginModal from '@/app/hooks/useLoginModal';
 // import { Input } from 'postcss';
 
 const RegisterModal = () => {
     const registerModal = useRegisterModal();
+    const loginModal = useLoginModal();
     const [isLoading, setIsLoading] = useState(false);
     const {
         register,
@@ -43,7 +45,15 @@ const RegisterModal = () => {
             password: '',
         }
     });
-    console.log(registerModal.isOpen, 'yyyyyyyy')
+    console.log(registerModal.isOpen, 'yyyyyyyy');
+
+
+
+    const toggle = useCallback(() => {
+      registerModal.onClose();
+      loginModal.onOpen();
+    },[loginModal, registerModal])
+
     const bodyContent = (
         <div className='flex flex-col gap-4 '>
             <Heading title={'Welcome to Airbnb'} subtitle='Create an Account!' />
@@ -95,7 +105,7 @@ const RegisterModal = () => {
       >
         <p>Already have an account?
           <span 
-            onClick={registerModal?.onClose} 
+            onClick={toggle} 
             className="
               text-neutral-800
                 cursor-pointer 
