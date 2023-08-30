@@ -78,6 +78,8 @@ model Listing {
   reservations Reservation[]
 }
 
+
+
 model Reservation {
   id String @id @default(auto()) @map("_id") @db.ObjectId
   userId String @db.ObjectId

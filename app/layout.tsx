@@ -36,7 +36,11 @@ export default function RootLayout({
           <Navbar />
           {/* <Modal isOpen={true} title={'Hellw World'} actionLabel={'Submit'} /> */}
         </ClientOnly>
-        {children}
+        <div className='pb-20 pt-28'>
+          {children}
+        </div>
+
+        
       </body>
     </html>
   )
