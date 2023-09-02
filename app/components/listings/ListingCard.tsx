@@ -10,8 +10,9 @@ import Image from 'next/image';
 import useAuthStore from '@/app/hooks/useAuthStore';
 import HeartButton from '../HeartButton';
 import Button from '../Button';
+import { safeListing } from '@/app/types';
 interface ListingCardProps {
-    data: Listing,
+    data: safeListing,
     reservation?: Reservation,
     onAction: (id: string) => void,
     disabled?: boolean,

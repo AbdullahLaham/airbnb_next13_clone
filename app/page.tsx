@@ -5,6 +5,7 @@ import Container from './components/Container';
 import EmptyState from './components/EmptyState';
 import getListings from './actions/getListings';
 import ListingCard from './components/listings/ListingCard';
+import { safeListing } from './types';
 
 export default async function Home() {
   const isEmpty = true;
@@ -23,7 +24,7 @@ export default async function Home() {
         <div className='pt-24 grid grid-cols-1 sm:gird-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-8 '>
 
           {
-            listings?.map((listing: any) => {
+            listings?.map((listing: safeListing) => {
               return (
                 <ListingCard key={listing?.id} data={listing} />
               )

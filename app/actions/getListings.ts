@@ -1,4 +1,5 @@
 import prisma from '@/app/libs/prismadb'
+import { list } from 'firebase/storage';
 
 export default async function getListings() {
     try {
@@ -7,8 +8,14 @@ export default async function getListings() {
                 createdAt: 'desc',
             }
         });
-        return listings;
+        const safeListings = listings.map((listing) => ({
+            ...listing,
+            createdAt: list?.createdAt?.toIsoString(),
+        }));
+
+        return safeListings;
     } catch (error) {
-        throw new Error(error)
+        throw new Error(error);
     }
 }
+

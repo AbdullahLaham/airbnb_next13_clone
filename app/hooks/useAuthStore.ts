@@ -1,4 +1,4 @@
-import create from 'zustand';
+import { create } from 'zustand'
 import axios from 'axios';
 import { User } from 'next-auth';
 import { safeUser } from '../types';
@@ -13,7 +13,8 @@ interface AuthState {
 }
 
 const useAuthStore = create<AuthState>((set) => ({
-  user: localStorage.getItem('user') !== null ? JSON.parse(localStorage.getItem('user')) : null,
+  
+  user: typeof window !== 'undefined' && localStorage.getItem('user') !== null ? JSON.parse(localStorage.getItem('user')) : null,
 
   login: async (email, password) => {
     try {
