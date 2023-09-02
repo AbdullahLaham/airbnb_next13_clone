@@ -11,7 +11,7 @@ interface IParams {
 const ListingPage = async ({ params }: {params: IParams}) => {
   console.log(params, 'rr')
   const listing = await getListingById(params);
-  const {user: currentUser} = useAuthStore();
+  // const {user: currentUser} = useAuthStore();
   if (!listing) {
     return (
       <ClientOnly>
@@ -21,7 +21,7 @@ const ListingPage = async ({ params }: {params: IParams}) => {
   }
   return (
     <ClientOnly>
-        <ListingClient listing={listing} currentUser={currentUser} />
+        <ListingClient listing={listing} />
     </ClientOnly>
   )
 }
