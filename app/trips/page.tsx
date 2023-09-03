@@ -8,11 +8,26 @@ import getCurrentUser from "../actions/getCurrentUser";
 import { Reservation } from "@prisma/client";
 
 const TripsPage =  async () => {
-  const {user: currentUser} = getCurrentUser();
+  const currentUser = getCurrentUser();
   console.log(currentUser, 'qqqqqqqqqqqqqqqq');
 
   const reservations: Reservation[] = await getReservations({userId: currentUser?.id});
+  if (!currentUser) {
+    return (
+      <ClientOnly>
+        <EmptyState title='Unauthorized' subtitle="please Login" />
+      </ClientOnly>
+        
+    ) 
+  }
 
+  if (reservations?.length === 0) {
+      return (
+          <ClientOnly>
+            <EmptyState title='No trips found' subtitle="Looks like you have not reserved any trips !" />
+          </ClientOnly>
+      ) 
+  }
   return (
     <ClientOnly>
         <TripsClient reservations={reservations}/>

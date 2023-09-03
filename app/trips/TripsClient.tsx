@@ -24,13 +24,13 @@ const TripsClient: React.FC<TripsClientProps> = ({reservations}) => {
     const router = useRouter();
     const onCancel = useCallback((id: string) => {
         setDeletingId(id);
-        axios.delete(`/api/reservations/${id}`, )
+        axios.delete(`/api/reservations/${id}`, currentUser)
         .then(() => {
             toast.success('Reservation Cancelled');
             router.refresh();
         })
         .catch((error) => {
-            toast.error(error?.response?.data?.error);
+            toast.error('something went wrong');
         })
         .finally(() => {
             setDeletingId('')
@@ -39,17 +39,7 @@ const TripsClient: React.FC<TripsClientProps> = ({reservations}) => {
 
     }, [deletingId, router])
     
-    if (!currentUser?.email) {
-        return (
-            <EmptyState title='Unauthorized' subtitle="please Login" />
-        ) 
-    }
     
-    if (reservations?.length === 0) {
-        return (
-            <EmptyState title='No trips found' subtitle="Looks like you have not reserved any trips !" />
-        ) 
-    }
     // const getCurrentReservations = async () => {
     //     try {
     //         const reservations: Reservation[] = await getReservations({userId: currentUser?.id});
@@ -72,7 +62,7 @@ const TripsClient: React.FC<TripsClientProps> = ({reservations}) => {
     <Container>
         <Heading title='Trips' subtitle='where you have been and where you are going ! ' />
         <div className='mt-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-8 '>
-            {reservations?.map((reservation: Reservation) => {
+            {reservations?.map((reservation: safeReservation) => {
                 return (
                     <ListingCard key={reservation?.id} data={reservation?.listing} reservation={reservation} actionId={reservation?.id} onAction={onCancel} disabled={deletingId == reservation?.id} actionLabel='Cancel Reservation'  />
                 )

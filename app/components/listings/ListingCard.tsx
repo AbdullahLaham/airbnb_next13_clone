@@ -10,15 +10,14 @@ import Image from 'next/image';
 import useAuthStore from '@/app/hooks/useAuthStore';
 import HeartButton from '../HeartButton';
 import Button from '../Button';
-import { safeListing } from '@/app/types';
+import { safeListing, safeReservation } from '@/app/types';
 interface ListingCardProps {
     data: safeListing,
-    reservation?: Reservation,
+    reservation?: safeReservation,
     onAction: (id: string) => void,
     disabled?: boolean,
     actionLabel?: string,
     actionId?: string,
-    // currentUser?: User | null,
 }
 const ListingCard: React.FC<ListingCardProps> = ({data, reservation, onAction, disabled, actionLabel, actionId = ""}) => {
   const router = useRouter();
@@ -74,12 +73,12 @@ const ListingCard: React.FC<ListingCardProps> = ({data, reservation, onAction, d
             {!reservation && (
               <div className='font-light'>night</div>
             )}
-            {actionLabel && (
-              <Button disabled onClick={handleCancel} label={actionLabel} small  />
-            )}
+            
 
           </div>
-
+            {actionLabel && (
+              <Button onClick={handleCancel} label={actionLabel} small  />
+            )}
 
         </div>
     </div>
