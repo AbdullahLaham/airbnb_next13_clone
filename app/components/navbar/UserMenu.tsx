@@ -9,20 +9,21 @@ import RegisterModal from '../modals/RegisterModal'
 import useLoginModal from '@/app/hooks/useLoginModal'
 import useAuthStore from '@/app/hooks/useAuthStore'
 import useRentModal from '@/app/hooks/useRentModal'
+import getCurrentUser from '@/app/actions/getCurrentUser'
 
-interface menuItemProps {
-    onClick: () => void,
-    label: string,
+interface UserMenuProps {
+  currentUser?: SafeUser | null
 }
 
-
-const UserMenu = () => {
+const UserMenu: React.FC<UserMenuProps> = ({
+  currentUser
+}) => {
   const [isOpen, setIsOpen] = useState(false);  
   const registerModal = useRegisterModal();
   const loginModal = useLoginModal();
   const rentModal = useRentModal();
 
-  const {user: currentUser, logout} = useAuthStore();
+  // const {user: currentUser, logout} = useAuthStore();
 
   const toggleOpen = useCallback(() => {
         setIsOpen((value) => !value)

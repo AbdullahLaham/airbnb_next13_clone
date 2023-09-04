@@ -1,37 +1,33 @@
 import EmptyState from "../components/EmptyState";
 import ClientOnly from "../components/ClientOnly";
 import getReservations from '../actions/getReservations'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import useAuthStore from "../hooks/useAuthStore";
 import TripsClient from "./TripsClient";
-import getCurrentUser from "../actions/getCurrentUser";
 import { Reservation } from "@prisma/client";
+import getCurrentUser from "../actions/getCurrentUser";
 
 const TripsPage =  async () => {
+
   const currentUser = getCurrentUser();
+
+  // const [currentUser, setCurrentUser] = useState({});
+
+  // useEffect(() => {
+  //   const storedData = localStorage.getItem('user');
+  //   if (storedData) {
+  //     const parsedData = JSON.parse(storedData);
+  //     setCurrentUser(parsedData);
+  //   }
+  // }, []);
+
   console.log(currentUser, 'qqqqqqqqqqqqqqqq');
 
-  const reservations: Reservation[] = await getReservations({userId: currentUser?.id});
-  if (!currentUser) {
-    return (
-      <ClientOnly>
-        <EmptyState title='Unauthorized' subtitle="please Login" />
-      </ClientOnly>
-        
-    ) 
-  }
 
-  if (reservations?.length === 0) {
-      return (
-          <ClientOnly>
-            <EmptyState title='No trips found' subtitle="Looks like you have not reserved any trips !" />
-          </ClientOnly>
-      ) 
-  }
+  const reservations: Reservation[] = await getReservations({userId: currentUser?.id});
+  
   return (
-    <ClientOnly>
-        <TripsClient reservations={reservations}/>
-    </ClientOnly>
+      <TripsClient reservations={reservations} />
   )
 }
 

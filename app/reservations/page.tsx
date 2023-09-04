@@ -7,11 +7,13 @@ import { safeReservation, safeUser } from '../types';
 import { User } from '@prisma/client';
 import ReservationsClient from './ReservationsClient';
 const page = async () => {
-    const currentUser: any = getCurrentUser();
+    const currentUser: safeUser = getCurrentUser();
+
     console.log(currentUser, 'qqqqqqqqqqqqqqqq');
   
     const reservations: safeReservation[] = await getReservations({authorId: currentUser?.id});
-    if (!currentUser) {
+
+    if (!currentUser?.email) {
         return (
           <ClientOnly>
             <EmptyState title='Unauthorized' subtitle="please Login" />
@@ -29,7 +31,7 @@ const page = async () => {
       }
   return (
     <ClientOnly>
-        <ReservationsClient />
+        <ReservationsClient reservations={reservations} currentUser={currentUser}  />
     </ClientOnly>
   )
 }

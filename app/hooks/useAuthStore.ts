@@ -32,6 +32,7 @@ const useAuthStore = create<AuthState>((set) => ({
     try {
       const response = await axios.post('/api/register', { email, name, password });
       const user = response.data;
+      set({user});
       localStorage.setItem('user', JSON.stringify(user));
       // Handle successful registration
     } catch (error) {
@@ -41,8 +42,10 @@ const useAuthStore = create<AuthState>((set) => ({
   },
 
   logout: () => {
+    
     set({ user: null });
     localStorage.clear();
+
   },
 }));
 

@@ -25,12 +25,14 @@ import Input from "../inputs/Input";
 import Button from "../Button";
 import Heading from '../Heading';
 import useLoginModal from '@/app/hooks/useLoginModal';
+import useAuthStore from '@/app/hooks/useAuthStore';
 // import { Input } from 'postcss';
 
 const RegisterModal = () => {
     const registerModal = useRegisterModal();
     const loginModal = useLoginModal();
     const [isLoading, setIsLoading] = useState(false);
+    const authStore = useAuthStore();
     const {
         register,
         handleSubmit,
@@ -83,7 +85,6 @@ const RegisterModal = () => {
       <hr />
       <Button 
         outline 
-        
         label="Continue with Google"
         icon={FcGoogle}
         onClick={() => signIn('google')} 
@@ -120,15 +121,15 @@ const RegisterModal = () => {
 
     let onSubmit: SubmitHandler<FieldValues> = (data) => {
         setIsLoading(true);
-
-        axios.post('/api/register', data)
+        const {name, email, password} = data
+        authStore.register(email, name, password)
         .then(() => {
-            toast.success('Registered!');
-            registerModal.onClose();
-            // loginModal.onOpen();
+          toast.success('Registered!');
+          registerModal.onClose();
+          loginModal.onOpen();
         })
         .catch((error) => {
-        toast.error(error);
+        toast.error(error?.message);
         })
         .finally(() => {
         setIsLoading(false);

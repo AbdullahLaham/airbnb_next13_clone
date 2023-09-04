@@ -116,25 +116,47 @@ const LoginModal = () => {
     </div>
   )
 
-    let onSubmit: SubmitHandler<FieldValues> = async (data) => {
-        setIsLoading(true);
-        const {email, password} = data
+    // let onSubmit: SubmitHandler<FieldValues> = async (data) => {
+    //     setIsLoading(true);
+    //     const {email, password} = data
         
-        authStore.login(email, password)
-        .then(() => {
-            toast.success('Logged In!');
-            router.refresh();
-            loginModal.onClose();
-            // loginModal.onOpen();
-        })
-        .catch((error) => {
-        toast.error(error?.message);
-        })
-        .finally(() => {
-        setIsLoading(false);
-        })
+    //     authStore.login(email, password)
+    //     .then(() => {
+    //         toast.success('Logged In!');
+    //         router.refresh();
+    //         loginModal.onClose();
+    //         // loginModal.onOpen();
+    //     })
+    //     .catch((error) => {
+    //     toast.error(error?.message);
+    //     })
+    //     .finally(() => {
+    //     setIsLoading(false);
+    //     })
 
-    }
+    // }
+    const onSubmit: SubmitHandler<FieldValues> = 
+  (data) => {
+    setIsLoading(true);
+
+    signIn('credentials', { 
+      ...data, 
+      redirect: false,
+    })
+    .then((callback) => {
+      setIsLoading(false);
+
+      if (callback?.ok) {
+        toast.success('Logged in');
+        router.refresh();
+        loginModal.onClose();
+      }
+      
+      if (callback?.error) {
+        toast.error(callback.error);
+      }
+    });
+  }
   return (
     <Modal
       disabled={isLoading}
