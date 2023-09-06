@@ -3,15 +3,17 @@ import ClientOnly from "../components/ClientOnly";
 import getReservations from '../actions/getReservations'
 import React from 'react'
 import useAuthStore from "../hooks/useAuthStore";
-import TripsClient from "./TripsClient";
 import getCurrentUser from "../actions/getCurrentUser";
 import { Reservation } from "@prisma/client";
+import FavoritesClient from "./FavoritesClient";
+import getFavoriteListings from "../actions/getFavoriteListings";
 
 const FavoritesPage =  async () => {
-  const currentUser = getCurrentUser();
+  const currentUser = await getCurrentUser();
   console.log(currentUser, 'qqqqqqqqqqqqqqqq');
 
-  const reservations: Reservation[] = await getReservations({userId: currentUser?.id});
+  const favorites = await getFavoriteListings();
+  
   if (!currentUser) {
     return (
       <ClientOnly>
@@ -21,7 +23,7 @@ const FavoritesPage =  async () => {
     ) 
   }
 
-  if (reservations?.length === 0) {
+  if (favorites?.length === 0) {
       return (
           <ClientOnly>
             <EmptyState title='No favorites found' subtitle="Looks like you have no favorite listings !" />
@@ -30,7 +32,7 @@ const FavoritesPage =  async () => {
   }
   return (
     <ClientOnly>
-        <TripsClient reservations={reservations}/>
+        <FavoritesClient listings={favorites} currentUser={currentUser} />
     </ClientOnly>
   )
 }

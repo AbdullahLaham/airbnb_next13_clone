@@ -3,13 +3,19 @@ import ClientOnly from './components/ClientOnly'
 // import { Container } from 'postcss'
 import Container from './components/Container';
 import EmptyState from './components/EmptyState';
-import getListings from './actions/getListings';
+import getListings, { IListingsParams } from './actions/getListings';
 import ListingCard from './components/listings/ListingCard';
 import { safeListing } from './types';
+import getCurrentUser from './actions/getCurrentUser';
 
-export default async function Home() {
+interface HomeProps {
+  searchParams: IListingsParams,
+}
+
+const Home = async ({ searchParams }: HomeProps) => {
   const isEmpty = true;
-  const listings = await getListings(); 
+  const listings: safeListing[] = await getListings(searchParams); 
+  const currentUser = await getCurrentUser();
   console.log(listings, 'rrrrrrrrr')
   if (listings?.length === 0) {
     return (
@@ -26,7 +32,7 @@ export default async function Home() {
           {
             listings?.map((listing: safeListing) => {
               return (
-                <ListingCard key={listing?.id} data={listing} />
+                <ListingCard key={listing?.id} data={listing} currentUser={currentUser} />
               )
             })
           }
@@ -36,3 +42,4 @@ export default async function Home() {
     </ClientOnly>
   )
 }
+export default Home;

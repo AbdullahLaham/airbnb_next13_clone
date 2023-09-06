@@ -30,7 +30,8 @@ const ReservationsClient: React.FC<ReservationsClientProps> = ({reservations, cu
       });
 
 
-  }, [deletingId, router])
+  }, [deletingId, router]);
+  
   return (
     <Container>
       <Heading title='Reservation' subtitle='Bookings in your properties' />

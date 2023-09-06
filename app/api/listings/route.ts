@@ -42,5 +42,5 @@ export async function POST(
     }
   });
 
-  return NextResponse.json('listing');
+  return NextResponse.json(listing);
 }

@@ -7,7 +7,7 @@ import { safeReservation, safeUser } from '../types';
 import { User } from '@prisma/client';
 import ReservationsClient from './ReservationsClient';
 const page = async () => {
-    const currentUser: safeUser = getCurrentUser();
+    const currentUser: safeUser = await getCurrentUser();
 
     console.log(currentUser, 'qqqqqqqqqqqqqqqq');
   

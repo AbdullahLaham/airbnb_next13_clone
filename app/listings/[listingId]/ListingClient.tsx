@@ -24,13 +24,13 @@ const initialDateRange = {
 
 interface ListingClientProps {
   reservations?: safeReservation[],
+  currentUser: safeUser,
   listing: safeListing & {
     user: safeUser
   },
 }
 
-const ListingClient: React.FC<ListingClientProps> = ({listing, reservations = []}) => {
-  const {user: currentUser} = useAuthStore();
+const ListingClient: React.FC<ListingClientProps> = ({listing, reservations = [], currentUser}) => {
   const loginModal = useLoginModal();
   const router = useRouter();
   const disabledDates = useMemo(() => {

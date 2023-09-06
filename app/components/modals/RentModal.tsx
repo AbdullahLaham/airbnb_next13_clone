@@ -19,7 +19,11 @@ import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { toast } from 'react-hot-toast';
 import useAuthStore from '@/app/hooks/useAuthStore';
-const RentModal = () => {
+import { safeUser } from '@/app/types';
+interface RentModalProps {
+    currentUser: safeUser,
+}
+const RentModal:React.FC<RentModalProps> = ({currentUser}) => {
     const rentModal = useRentModal();
     const router = useRouter();
     // const handleSubmit = useCallback(() => {
@@ -37,7 +41,6 @@ const RentModal = () => {
     const [step, setStep] = useState(STEPS.CATEGORY);
     const [selected, setSelected] = useState('');
     const [isLoading, setIsLoading] = useState(false);
-    const {user: currentUser, logout} = useAuthStore();
 
 
     const {register, handleSubmit, setValue, watch, formState: { errors }, reset} = useForm<FieldValues>({

@@ -1,12 +1,15 @@
 'use client'
 
+import useSearchModal from "@/app/hooks/useSearchModal"
 import Image from "next/image"
-import { useRouter } from "next/router"
+import { useRouter } from "next/navigation"
 import {BiSearch} from 'react-icons/bi'
 const Search = () => {
+  const searchModal = useSearchModal();
+
   return (
     <div
-    //   onClick={searchModal.onOpen}
+      onClick={searchModal.onOpen}
       className="
         border-[1px] 
         w-full 

@@ -10,7 +10,7 @@ import Image from 'next/image';
 import useAuthStore from '@/app/hooks/useAuthStore';
 import HeartButton from '../HeartButton';
 import Button from '../Button';
-import { safeListing, safeReservation } from '@/app/types';
+import { safeListing, safeReservation, safeUser } from '@/app/types';
 interface ListingCardProps {
     data: safeListing,
     reservation?: safeReservation,
@@ -18,12 +18,12 @@ interface ListingCardProps {
     disabled?: boolean,
     actionLabel?: string,
     actionId?: string,
+    currentUser: safeUser | null,
 }
-const ListingCard: React.FC<ListingCardProps> = ({data, reservation, onAction, disabled, actionLabel, actionId = ""}) => {
+const ListingCard: React.FC<ListingCardProps> = ({data, reservation, onAction, disabled, actionLabel, actionId = "", currentUser={currentUser}}) => {
   const router = useRouter();
   const {getByValue} = useCountries();
   const location = getByValue(data?.locationValue);
-  const {user: currentUser} = useAuthStore();
   
   const handleCancel = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation();
@@ -59,7 +59,7 @@ const ListingCard: React.FC<ListingCardProps> = ({data, reservation, onAction, d
           <div className='aspect-square w-full relative overflow-hidden rounded-xl '>
             <Image fill src={data.imageSrc} alt='listing' className='object-cover h-full w-full group-hover:scale-110 transition'  />
             <div className='absolute top-3 right-3'>
-              <HeartButton listingId={data.id} />
+              <HeartButton listingId={data.id} currentUser={currentUser} />
             </div>
           </div>
           <div className='font-semibold text-lg '>

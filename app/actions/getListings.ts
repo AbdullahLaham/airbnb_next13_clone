@@ -1,21 +1,30 @@
 import prisma from '@/app/libs/prismadb'
 import { list } from 'firebase/storage';
 
-export default async function getListings() {
+export interface IListingsParams {
+    userId?: string,
+}
+
+export default async function getListings(params: IListingsParams) {
     try {
+        const {userId} = params;
+        let query: any = {};
+        if (userId) query.userId = userId;
+
         const listings = await prisma?.listing.findMany({
+            where: query,
             orderBy: {
                 createdAt: 'desc',
             }
         });
         const safeListings = listings.map((listing) => ({
             ...listing,
-            createdAt: list?.createdAt?.toIsoString(),
+            createdAt: listing.createdAt.toISOString(),
         }));
 
         return safeListings;
-    } catch (error) {
+    } catch (error: any) {
         throw new Error(error);
-    }
+      }
 }
 

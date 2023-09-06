@@ -1,51 +1,63 @@
-import axios from 'axios';
-import { useRouter } from 'next/navigation';
-import { useCallback, useMemo } from 'react';
-import {toast} from 'react-hot-toast';
-import useLoginModal from './useLoginModal';
-import { User } from '@prisma/client';
-import { list } from 'firebase/storage';
-import { log } from 'console';
-import { safeUser } from '../types';
+import axios from "axios";
+import { useRouter } from "next/navigation";
+import { useCallback, useMemo } from "react";
+import { toast } from "react-hot-toast";
+
+import { safeUser } from "@/app/types";
+
+import useLoginModal from "./useLoginModal";
 
 interface IUseFavorite {
-    listingId: string,
-    currentUser?: safeUser | null;
+  listingId: string;
+  currentUser?: safeUser | null
 }
-const useFavorite = ({listingId, currentUser} : IUseFavorite) => {
-    const router = useRouter();
-    const loginModal = useLoginModal();
 
-    const hasFavoritted = useMemo(() => {
-        const list = currentUser?.favoriteIds || [];
-        return list.includes(listingId);
-    }, [currentUser, listingId]);
+const useFavorite = ({ listingId, currentUser }: IUseFavorite) => {
+  const router = useRouter();
 
-    const toggleFavorite = useCallback(async (e: React.MouseEvent<HTMLDivElement>) => {
-        e.stopPropagation();
-        if (!currentUser?.id) {
-            return loginModal.onOpen();
-        }
-        try {
-            let request;
-            if (hasFavoritted) {
-                request = () => axios.delete(`/api/favorites/${listingId}`, JSON.parse(localStorage.getItem('user')));
-            } else {
-                request = () => axios.post(`/api/favorites/${listingId}`, JSON.parse(localStorage.getItem('user')));
-            }
-            const data = await request();
-            console.log(data, 'tttt')
-            // router.refresh();
-            toast.success('Favorite list updated successfully');
+  const loginModal = useLoginModal();
 
+  const hasFavorited = useMemo(() => {
+    const list = currentUser?.favoriteIds || [];
 
-        } catch (error) {
-            toast.error('something went wrong');
-        }
-    }, [currentUser, hasFavoritted, loginModal, listingId, router]);
-    return {
-        hasFavoritted, toggleFavorite
+    return list.includes(listingId);
+  }, [currentUser, listingId]);
+
+  const toggleFavorite = useCallback(async (e: React.MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation();
+
+    if (!currentUser) {
+      return loginModal.onOpen();
     }
+
+    try {
+      let request;
+
+      if (hasFavorited) {
+        request = () => axios.delete(`/api/favorites/${listingId}`);
+      } else {
+        request = () => axios.post(`/api/favorites/${listingId}`);
+      }
+
+      await request();
+      router.refresh();
+      toast.success('Success');
+    } catch (error) {
+      toast.error('Something went wrong.');
+    }
+  }, 
+  [
+    currentUser, 
+    hasFavorited, 
+    listingId, 
+    loginModal,
+    router
+  ]);
+
+  return {
+    hasFavorited,
+    toggleFavorite,
+  }
 }
 
 export default useFavorite;

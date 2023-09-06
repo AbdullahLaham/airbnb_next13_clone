@@ -39,22 +39,6 @@ const TripsClient: React.FC<TripsClientProps> = ({reservations}) => {
 
     }, [deletingId, router])
     
-    
-    // const getCurrentReservations = async () => {
-    //     try {
-    //         const reservations: Reservation[] = await getReservations({userId: currentUser?.id});
-    //         console.log(reservations, 'tttteeeeeeeeeeeeeeee');
-    //         setReservations(reservations);
-    //     } catch (error) {
-    //         console.log(error)
-    //     }
-    // }
-
-    // getCurrentReservations();
-   
-
-
-    
 
     console.log(reservations, 'rrrrrrrrrrr');
 
