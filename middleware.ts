@@ -1,4 +1,4 @@
-// import {default} from 'next-auth/middleware';
+export {default} from 'next-auth/middleware';
 
 export const config = {
     matcher: [
@@ -6,7 +6,13 @@ export const config = {
         '/reservations',
         '/properties',
         '/favorites',
-    ]
+    ],
+    externals: [
+        {
+          'nock': 'commonjs2 nock',
+          'mock-aws-s3': 'commonjs2 mock-aws-s3'
+        }
+      ],
 }
 
 // This is your Prisma schema file,
