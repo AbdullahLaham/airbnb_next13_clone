@@ -1,3 +1,5 @@
+"use client"
+
 
 import React, { useCallback, useEffect, useState } from 'react'
 import EmptyState from '../components/EmptyState';
@@ -8,17 +10,18 @@ import { Reservation } from '@prisma/client';
 import Heading from '../components/Heading';
 import Container from '../components/Container';
 import { useRouter } from 'next/navigation';
-import axios from 'axios';
+import axios from 'axios'
+;
 import { toast } from 'react-hot-toast';
 import ListingCard from '../components/listings/ListingCard';
 import getCurrentUser from '../actions/getCurrentUser';
 
 interface TripsClientProps {
     reservations?: safeReservation[],
+    currentUser: any
 }
 
-const TripsClient: React.FC<TripsClientProps> = async ({reservations}) => {
-    const currentUser: any = await getCurrentUser();
+const TripsClient: React.FC<TripsClientProps> = ({reservations, currentUser}) => {
     // const [reservations, setReservations] = useState<any>([]);
     const [deletingId, setDeletingId] = useState("");
     const router = useRouter();

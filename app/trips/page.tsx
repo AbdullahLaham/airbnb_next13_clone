@@ -28,7 +28,7 @@ const TripsPage =  async () => {
   const reservations: any = await getReservations({userId: currentUser?.id});
   
   return (
-      <TripsClient reservations={reservations} />
+      <TripsClient reservations={reservations} currentUser={currentUser} />
   )
 }
 
