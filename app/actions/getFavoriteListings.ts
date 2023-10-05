@@ -17,7 +17,7 @@ export default async function getFavoriteListings() {
             createdAt: fav?.createdAt?.toISOString(),
         }))
         return safeFavorites;
-    } catch (error) {
+    } catch (error: any) {
         throw new Error(error);
     }
 

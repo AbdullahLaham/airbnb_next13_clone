@@ -31,9 +31,7 @@ import useRegisterModal from '@/app/hooks/useRegisterModal';
 
 const LoginModal = () => {
     const loginModal = useLoginModal();
-    const authStore = useAuthStore();
     const registerModal = useRegisterModal();
-    console.log(authStore?.user)
     const [isLoading, setIsLoading] = useState(false);
     // router
     const router = useRouter();

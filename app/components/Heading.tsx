@@ -5,9 +5,7 @@ interface HeadingProps {
   subtitle?: string;
   center?: boolean;
 }
-export const getCurrentUser = () => {
-  return JSON.parse(localStorage.getItem('user'));
-}
+
 const Heading: React.FC<HeadingProps> = ({title, subtitle, center}) => {
   return ( 
     <div className={center ? 'text-center' : 'text-start'}>

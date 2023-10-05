@@ -32,7 +32,7 @@ const Home = async ({ searchParams }: HomeProps) => {
           {
             listings?.map((listing: safeListing) => {
               return (
-                <ListingCard key={listing?.id} data={listing} currentUser={currentUser} />
+                <ListingCard key={listing?.id} data={listing} currentUser={currentUser} /> 
               )
             })
           }

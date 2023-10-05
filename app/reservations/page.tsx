@@ -6,12 +6,13 @@ import getReservations from '../actions/getReservations';
 import { safeReservation, safeUser } from '../types';
 import { User } from '@prisma/client';
 import ReservationsClient from './ReservationsClient';
+import useAuthStore from '../hooks/useAuthStore';
 const page = async () => {
-    const currentUser: safeUser = await getCurrentUser();
+    const currentUser = await getCurrentUser();
 
     console.log(currentUser, 'qqqqqqqqqqqqqqqq');
   
-    const reservations: safeReservation[] = await getReservations({authorId: currentUser?.id});
+    const reservations: any = await getReservations({authorId: currentUser?.id});
 
     if (!currentUser?.email) {
         return (

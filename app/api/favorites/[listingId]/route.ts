@@ -1,13 +1,15 @@
 import { NextResponse } from "next/server";
 import prisma from '@/app/libs/prismadb'
 import getCurrentUser from "@/app/actions/getCurrentUser";
+import { safeUser } from "@/app/types";
+import { User } from "@prisma/client";
 
 interface IParams {
     listingId?: string,
 }
 export async function POST(request: Request, {params}: {params: IParams}) {
     const {listingId} = params;
-    const currentUser = await getCurrentUser();
+    const currentUser: any = await getCurrentUser();
     if (!listingId || typeof listingId !== 'string') {
         throw new Error('Invalid ID');
     }

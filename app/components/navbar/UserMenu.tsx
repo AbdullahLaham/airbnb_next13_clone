@@ -12,7 +12,7 @@ import useRentModal from '@/app/hooks/useRentModal'
 import getCurrentUser from '@/app/actions/getCurrentUser'
 
 interface UserMenuProps {
-  currentUser?: SafeUser | null
+  currentUser?: any
 }
 
 const UserMenu: React.FC<UserMenuProps> = ({
@@ -23,7 +23,7 @@ const UserMenu: React.FC<UserMenuProps> = ({
   const loginModal = useLoginModal();
   const rentModal = useRentModal();
 
-  // const {user: currentUser, logout} = useAuthStore();
+  const {logout} = useAuthStore();
 
   const toggleOpen = useCallback(() => {
         setIsOpen((value) => !value)

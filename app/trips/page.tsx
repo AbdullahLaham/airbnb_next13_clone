@@ -6,10 +6,11 @@ import useAuthStore from "../hooks/useAuthStore";
 import TripsClient from "./TripsClient";
 import { Reservation } from "@prisma/client";
 import getCurrentUser from "../actions/getCurrentUser";
+import { AnyMxRecord } from "dns";
 
 const TripsPage =  async () => {
 
-  const currentUser = getCurrentUser();
+  const currentUser = await getCurrentUser();
 
   // const [currentUser, setCurrentUser] = useState({});
 
@@ -24,7 +25,7 @@ const TripsPage =  async () => {
   console.log(currentUser, 'qqqqqqqqqqqqqqqq');
 
 
-  const reservations: Reservation[] = await getReservations({userId: currentUser?.id});
+  const reservations: any = await getReservations({userId: currentUser?.id});
   
   return (
       <TripsClient reservations={reservations} />

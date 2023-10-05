@@ -1,4 +1,3 @@
-'use client'
 
 import useAuthStore from '@/app/hooks/useAuthStore';
 import useCountries from '@/app/hooks/useCountries';
@@ -6,6 +5,7 @@ import React from 'react'
 import Heading from '../Heading';
 import Image from 'next/image';
 import HeartButton from '../HeartButton';
+import getCurrentUser from '@/app/actions/getCurrentUser';
 interface ListingHeadProps {
   title: string;
   locationValue: string;
@@ -14,8 +14,8 @@ interface ListingHeadProps {
 
 }
 
-const ListingHead: React.FC<ListingHeadProps> = ({title, locationValue, imageSrc, id}) => {
-  const {user: currentUser} = useAuthStore();
+const ListingHead: React.FC<ListingHeadProps> = async ({title, locationValue, imageSrc, id}) => {
+  const currentUser = await getCurrentUser();
   const {getByValue} = useCountries();
   const location = getByValue(locationValue);
   return (

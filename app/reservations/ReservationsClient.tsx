@@ -10,7 +10,7 @@ import { toast } from 'react-hot-toast'
 import ListingCard from '../components/listings/ListingCard'
 interface ReservationsClientProps {
   reservations: safeReservation[];
-  currentUser?: safeUser | null;
+  currentUser?: any;
 } 
 const ReservationsClient: React.FC<ReservationsClientProps> = ({reservations, currentUser}) => {
   const [deletingId, setDeletingId] = useState("");

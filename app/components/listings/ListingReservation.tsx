@@ -11,7 +11,7 @@ interface ListingReservationProps {
     onChangeDate: (value: Range) => void;
     onSubmit: () => void;
     disabled?: boolean;
-    disabledDates: Date[];
+    disabledDates: any;
 }
 const ListingReservation: React.FC<
 ListingReservationProps
@@ -36,7 +36,7 @@ disabledDates
             </div>
         </div>
         <hr />
-        <Calendar value={dateRange} disabled={disabledDates} onChange={(value) => onChangeDate(value.select)} />
+        <Calendar value={dateRange} disabledDates={disabledDates} onChange={(value) => onChangeDate(value.select)} />
         <hr />
         <div>
           <Button disabled={disabled} label='Reserve' onClick={onSubmit} />

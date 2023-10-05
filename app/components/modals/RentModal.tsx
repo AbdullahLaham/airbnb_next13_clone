@@ -21,7 +21,7 @@ import { toast } from 'react-hot-toast';
 import useAuthStore from '@/app/hooks/useAuthStore';
 import { safeUser } from '@/app/types';
 interface RentModalProps {
-    currentUser: safeUser,
+    currentUser: any,
 }
 const RentModal:React.FC<RentModalProps> = ({currentUser}) => {
     const rentModal = useRentModal();

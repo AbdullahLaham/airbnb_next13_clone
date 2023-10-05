@@ -11,16 +11,18 @@ import useAuthStore from '@/app/hooks/useAuthStore';
 import HeartButton from '../HeartButton';
 import Button from '../Button';
 import { safeListing, safeReservation, safeUser } from '@/app/types';
+
 interface ListingCardProps {
     data: safeListing,
     reservation?: safeReservation,
-    onAction: (id: string) => void,
+    onAction?: (id: string) => void,
     disabled?: boolean,
     actionLabel?: string,
     actionId?: string,
-    currentUser: safeUser | null,
+    currentUser?: any,
 }
-const ListingCard: React.FC<ListingCardProps> = ({data, reservation, onAction, disabled, actionLabel, actionId = "", currentUser={currentUser}}) => {
+
+const ListingCard: React.FC<ListingCardProps> = ({data, reservation, onAction, disabled, actionLabel, actionId = "", currentUser,}) => {
   const router = useRouter();
   const {getByValue} = useCountries();
   const location = getByValue(data?.locationValue);
