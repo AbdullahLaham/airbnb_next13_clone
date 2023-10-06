@@ -13,6 +13,9 @@ export const config = {
           'mock-aws-s3': 'commonjs2 mock-aws-s3'
         }
       ],
+      "compilerOptions": {
+        "webpack": true
+      }
 }
 
 // This is your Prisma schema file,
