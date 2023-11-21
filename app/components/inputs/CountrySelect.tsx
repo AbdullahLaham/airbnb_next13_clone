@@ -5,11 +5,11 @@ import React from 'react'
 import Select from 'react-select'
 
 export type CountrySelectValue = {
-  flag: string;
-  label: string;
-  latlng: number[],
-  region: string,
-  value: string,
+  flag?: string;
+  label?: string;
+  latlng?: number[],
+  region?: string,
+  value?: string,
 
 }
 
@@ -26,7 +26,7 @@ const CountrySelect: React.FC<CountrySelectProps> = ({value, onChange}) => {
     <div>
         <Select placeholder='Anyware' isClearable options={getAll()} value={value} onChange={(value) => onChange(value as CountrySelectValue)} formatOptionLabel={(option : any) => (
           <div className="
-          flex flex-row items-center gap-3">
+          flex flex-row items-center gap-3" >
             <div>{option.flag}</div>
             <div>
               {option.label},

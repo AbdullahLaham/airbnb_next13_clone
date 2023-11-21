@@ -24,7 +24,7 @@ const SearchModal = () => {
     const searchModal = useSearchModal();
     const router = useRouter();
     const params = useSearchParams();
-    const [location, setLocation] = useState<CountrySelectValue>();
+    const [location, setLocation] = useState<any>();
   const [step, setStep] = useState(STEPS.LOCATION);
   const [guestCount, setGuestCount] = useState(1);
   const [roomCount, setRoomCount] = useState(1);
@@ -82,13 +82,16 @@ const SearchModal = () => {
     return undefined;
   }, [step])
   
+
   let bodyContent = (
     <div className='flex flex-col gap-8'>
       <Heading title='were do you wanna go!' subtitle='find the perfect location!' />
       <CountrySelect value={location} onChange={(value) => setLocation(value as CountrySelectValue)}  />
       <Map center={location?.latlng} />
     </div>
-  )
+  );
+
+
   if (step == STEPS.DATE) {
     bodyContent = (
       <div className='flex flex-col gap-8'>
@@ -96,7 +99,8 @@ const SearchModal = () => {
         <Calendar value={dateRange} onChange={(value) => setDateRange(value.selection)} />
       </div>
     )
-  }
+  };
+
   if (step == STEPS.INFO) {
     bodyContent = (
       <div className='flex flex-col gap-8'>
@@ -106,11 +110,13 @@ const SearchModal = () => {
         <Counter title='Bathrooms' subtitle='How many bathrooms do you need ? ' onChange={(value) => setBathroomCount(value)} value={bathroomCount} />
       </div>
     )
-  }
+  };
+
+  
   return (
-    <Modal isOpen={searchModal.isOpen} onClose={searchModal.onClose} onSubmit={onSubmit} title='Filters' actionLabel='Search' body={bodyContent} secondaryActionLabel={secondaryAtionLabel} secondaryAction={step === STEPS.LOCATION ? undefined : onBack} actionLabel={actionLabel} body={bodyContent}   />
+    <Modal isOpen={searchModal.isOpen} actionLabel={actionLabel}  onClose={searchModal.onClose} onSubmit={onSubmit} title='Filters' body={bodyContent} secondaryActionLabel={secondaryAtionLabel} secondaryAction={step === STEPS.LOCATION ? undefined : onBack}  />
         
   )
 }
 
-export default SearchModal
+export default SearchModal;

@@ -56,7 +56,8 @@ const RentModal:React.FC<RentModalProps> = ({currentUser}) => {
             description: '',
 
         }
-    })
+    });
+    
     const category = watch('category');
     const location = watch('location');
     const guestCount = watch('guestCount');

@@ -34,3 +34,4 @@ export async function DELETE(
 
   return NextResponse.json(reservation);
 }
+

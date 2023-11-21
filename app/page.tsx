@@ -3,7 +3,7 @@ import ClientOnly from './components/ClientOnly'
 // import { Container } from 'postcss'
 import Container from './components/Container';
 import EmptyState from './components/EmptyState';
-import getListings, { IListingsParams } from './actions/getListings';
+import getListings, { IListingsParams } from './actions/getListings';;
 import ListingCard from './components/listings/ListingCard';
 import { safeListing } from './types';
 import getCurrentUser from './actions/getCurrentUser';
@@ -16,7 +16,7 @@ const Home = async ({ searchParams }: HomeProps) => {
   const isEmpty = true;
   const listings: safeListing[] = await getListings(searchParams); 
   const currentUser = await getCurrentUser();
-  console.log(listings, 'rrrrrrrrr')
+  console.log(listings, 'rrrrrrrrr');
   if (listings?.length === 0) {
     return (
       <ClientOnly>

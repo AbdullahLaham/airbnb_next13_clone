@@ -24,7 +24,9 @@ export default async function getListings(params: IListingsParams) {
             endDate,
             category,
           } = params;
+          
         let query: any = {};
+        
         if (userId) query.userId = userId;
 
         if (roomCount) {
